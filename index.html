@@ -3,14 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-    <title>Pawon Mbah Gito · Visual Analytics | April vs Mei 2026</title>
+    <title>Pawon Mbah Gito · Visual Analytics | Mei vs Juni 2026</title>
     <!-- Font Awesome 6 -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <!-- Google Fonts (modern) -->
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <!-- Chart.js -->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
-    <!-- AOS animation (optional) -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js">
+    </script>
+    <!-- AOS animation -->
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <style>
         * {
@@ -25,14 +26,13 @@
             scroll-behavior: smooth;
             overflow-x: hidden;
         }
-        /* background gradien gelap dengan tekstur */
         .bg-texture {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background-image: radial-gradient(circle at 25% 40%, rgba(201, 126, 44, 0.08) 0%, rgba(0,0,0,0) 60%);
+            background-image: radial-gradient(circle at 25% 40%, rgba(201, 126, 44, 0.08) 0%, rgba(0, 0, 0, 0) 60%);
             pointer-events: none;
             z-index: -2;
         }
@@ -42,11 +42,10 @@
             right: -10%;
             width: 70%;
             height: 70%;
-            background: radial-gradient(ellipse, rgba(201,126,44,0.2), transparent 70%);
+            background: radial-gradient(ellipse, rgba(201, 126, 44, 0.18), transparent 70%);
             filter: blur(80px);
             z-index: -1;
         }
-        /* navbar premium */
         .navbar {
             background: rgba(12, 10, 9, 0.85);
             backdrop-filter: blur(12px);
@@ -86,13 +85,16 @@
             transition: 0.2s;
             font-size: 0.95rem;
         }
-        .nav-links a:hover { color: #f2a65a; border-bottom: 1px solid #f2a65a; padding-bottom: 4px; }
+        .nav-links a:hover {
+            color: #f2a65a;
+            border-bottom: 1px solid #f2a65a;
+            padding-bottom: 4px;
+        }
         .container {
             max-width: 1400px;
             margin: 0 auto;
             padding: 2rem 2rem 4rem;
         }
-        /* hero modern */
         .hero-glow {
             background: linear-gradient(125deg, rgba(30, 24, 20, 0.9), rgba(15, 12, 10, 0.95));
             backdrop-filter: blur(2px);
@@ -100,12 +102,12 @@
             border: 1px solid rgba(201, 126, 44, 0.4);
             padding: 2.2rem;
             margin-bottom: 2.5rem;
-            box-shadow: 0 25px 40px -12px rgba(0,0,0,0.5);
+            box-shadow: 0 25px 40px -12px rgba(0, 0, 0, 0.5);
         }
         .kpi-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
-            gap: 1.5rem;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.2rem;
             margin: 1.8rem 0;
         }
         .glass-card {
@@ -113,10 +115,10 @@
             backdrop-filter: blur(12px);
             border-radius: 2rem;
             border: 1px solid rgba(201, 126, 44, 0.25);
-            padding: 1.2rem 1rem;
+            padding: 1.2rem 0.8rem;
             text-align: center;
             transition: all 0.25s ease;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
         }
         .glass-card:hover {
             border-color: #e07c2c;
@@ -124,7 +126,7 @@
             background: rgba(35, 28, 22, 0.8);
         }
         .kpi-number {
-            font-size: 2.4rem;
+            font-size: 2.2rem;
             font-weight: 800;
             background: linear-gradient(145deg, #ffcd94, #e07c2c);
             -webkit-background-clip: text;
@@ -132,10 +134,20 @@
             color: transparent;
             letter-spacing: -0.5px;
         }
+        .kpi-label {
+            font-size: 0.75rem;
+            opacity: 0.8;
+            margin-top: 2px;
+        }
         .trend-up {
             color: #6fcf97;
             font-weight: 600;
-            font-size: 0.8rem;
+            font-size: 0.75rem;
+        }
+        .trend-down {
+            color: #f28b82;
+            font-weight: 600;
+            font-size: 0.75rem;
         }
         .badge-premium {
             background: rgba(224, 124, 44, 0.2);
@@ -143,7 +155,7 @@
             padding: 4px 14px;
             font-size: 0.7rem;
             font-weight: 500;
-            border: 0.5px solid rgba(224,124,44,0.5);
+            border: 0.5px solid rgba(224, 124, 44, 0.5);
             display: inline-block;
         }
         .section-title {
@@ -171,12 +183,20 @@
             border: 1px solid rgba(201, 126, 44, 0.3);
             transition: 0.2s;
         }
+        .chart-premium h3 {
+            color: #f3c691;
+            font-size: 1.2rem;
+            margin-bottom: 0.8rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
         .insight-card {
             background: rgba(20, 17, 15, 0.7);
             backdrop-filter: blur(8px);
             border-radius: 2rem;
             padding: 1.6rem;
-            border: 1px solid rgba(201,126,44,0.3);
+            border: 1px solid rgba(201, 126, 44, 0.3);
         }
         .insight-card h3 {
             font-size: 1.4rem;
@@ -194,6 +214,11 @@
         .list-styled li {
             margin: 0.6rem 0;
             color: #e2cfb5;
+            list-style: none;
+        }
+        .list-styled li i {
+            width: 20px;
+            color: #e07c2c;
         }
         .strategy-dark-premium {
             background: linear-gradient(145deg, #1f1b17, #14110e);
@@ -223,8 +248,9 @@
             border-radius: 1rem;
             padding: 0.7rem 1rem;
             flex: 1;
+            min-width: 80px;
             text-align: center;
-            font-size: 0.8rem;
+            font-size: 0.75rem;
             font-weight: 500;
             border-left: 2px solid #e07c2c;
         }
@@ -232,17 +258,36 @@
             text-align: center;
             margin-top: 3rem;
             padding: 2rem;
-            background: rgba(0,0,0,0.4);
+            background: rgba(0, 0, 0, 0.4);
             border-radius: 2rem;
             font-size: 0.8rem;
-            border-top: 1px solid rgba(224,124,44,0.2);
+            border-top: 1px solid rgba(224, 124, 44, 0.2);
         }
         @media (max-width: 760px) {
-            .container { padding: 1rem; }
-            .kpi-number { font-size: 1.7rem; }
+            .container {
+                padding: 1rem;
+            }
+            .kpi-number {
+                font-size: 1.6rem;
+            }
+            .navbar {
+                padding: 0.7rem 1.2rem;
+            }
+            .nav-links {
+                gap: 1rem;
+                font-size: 0.8rem;
+            }
+            .hero-glow {
+                padding: 1.2rem;
+            }
         }
-        .progress-icon { margin-right: 5px; }
-        canvas { max-height: 260px; width: 100%; }
+        .progress-icon {
+            margin-right: 5px;
+        }
+        canvas {
+            max-height: 240px;
+            width: 100%;
+        }
         .stat-compare {
             display: flex;
             justify-content: space-between;
@@ -250,229 +295,422 @@
             gap: 12px;
             flex-wrap: wrap;
         }
+        .mini-badge {
+            font-size: 0.65rem;
+            background: rgba(224, 124, 44, 0.15);
+            padding: 2px 10px;
+            border-radius: 20px;
+            border: 0.5px solid rgba(224, 124, 44, 0.3);
+        }
+        .table-wrap {
+            overflow-x: auto;
+            background: rgba(20, 17, 15, 0.7);
+            border-radius: 1.5rem;
+            padding: 0.5rem;
+            border: 1px solid rgba(201, 126, 44, 0.2);
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.85rem;
+        }
+        th,
+        td {
+            padding: 10px 14px;
+            text-align: left;
+            border-bottom: 1px solid rgba(201, 126, 44, 0.15);
+        }
+        th {
+            color: #f3c691;
+            font-weight: 600;
+        }
+        tr:last-child td {
+            border-bottom: none;
+        }
+        .highlight-green {
+            color: #6fcf97;
+        }
+        .highlight-orange {
+            color: #f2a65a;
+        }
+        .highlight-red {
+            color: #f28b82;
+        }
+        .flex-stats {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+            justify-content: space-around;
+        }
     </style>
 </head>
 <body>
-<div class="bg-texture"></div>
-<div class="bg-glow"></div>
+    <div class="bg-texture"></div>
+    <div class="bg-glow"></div>
 
-<nav class="navbar">
-    <div class="logo"><i class="fas fa-utensils"></i> pawonmbahgito · analytics</div>
-    <div class="nav-links">
-        <a href="#ringkasan">Ringkasan</a>
-        <a href="#insight">Insight</a>
-        <a href="#strategi">Strategi</a>
-        <a href="#performa">Performa</a>
-    </div>
-</nav>
+    <nav class="navbar">
+        <div class="logo"><i class="fas fa-utensils"></i> pawonmbahgito · analytics</div>
+        <div class="nav-links">
+            <a href="#ringkasan">Ringkasan</a>
+            <a href="#insight">Insight</a>
+            <a href="#strategi">Strategi</a>
+            <a href="#performa">Performa</a>
+        </div>
+    </nav>
 
-<div class="container">
-    <!-- HERO SECTION dengan perbandingan dinamis -->
-    <div class="hero-glow" id="ringkasan" data-aos="fade-up">
-        <div class="stat-compare">
-            <div>
-                <span class="badge-premium"><i class="fas fa-calendar-alt"></i> April vs Mei 2026</span>
-                <h1 style="font-size: 2rem; margin-top: 12px;">🍲 <span style="background: linear-gradient(135deg,#f2c48d,#e07c2c);-webkit-background-clip:text;background-clip:text;color:transparent;">Pawon Mbah Gito</span><br>Performa Ekspansif</h1>
+    <div class="container">
+
+        <!-- ===== HERO ===== -->
+        <div class="hero-glow" id="ringkasan" data-aos="fade-up">
+            <div class="stat-compare">
+                <div>
+                    <span class="badge-premium"><i class="fas fa-calendar-alt"></i> Mei vs Juni 2026</span>
+                    <h1 style="font-size: 2rem; margin-top: 12px;">🍲 <span style="background:linear-gradient(135deg,#f2c48d,#e07c2c);-webkit-background-clip:text;background-clip:text;color:transparent;">Pawon Mbah Gito</span><br>Lompatan Interaksi &amp; Engagement</h1>
+                </div>
+                <div><i class="fas fa-rocket" style="font-size: 3rem; color: #e07c2c; opacity: 0.8;"></i></div>
             </div>
-            <div><i class="fas fa-chart-line" style="font-size: 3rem; color: #e07c2c; opacity: 0.8;"></i></div>
+            <div class="kpi-grid">
+                <div class="glass-card">
+                    <div class="kpi-number">546,9rb → 975,2rb</div>
+                    <div class="kpi-label">Tayangan <span class="trend-up"><i class="fas fa-arrow-up"></i> +78,3%</span></div>
+                </div>
+                <div class="glass-card">
+                    <div class="kpi-number">220,2rb → 88,2rb</div>
+                    <div class="kpi-label">Reach <span class="trend-down"><i class="fas fa-arrow-down"></i> -59,9%</span></div>
+                </div>
+                <div class="glass-card">
+                    <div class="kpi-number">1.600 → 2.800</div>
+                    <div class="kpi-label">Followers Baru <span class="trend-up"><i class="fas fa-chart-simple"></i> +75%</span></div>
+                </div>
+                <div class="glass-card">
+                    <div class="kpi-number">7,8rb → 45,8rb</div>
+                    <div class="kpi-label">Interaksi <span class="trend-up"><i class="fas fa-bolt"></i> +487%</span></div>
+                </div>
+                <div class="glass-card">
+                    <div class="kpi-number">71,8% → 86,8%</div>
+                    <div class="kpi-label">Non-Followers <span class="trend-up"><i class="fas fa-expand"></i> +15pp</span></div>
+                </div>
+            </div>
+            <p style="margin-top: 0.5rem; opacity:0.9;">
+                <i class="fas fa-fire" style="color:#e07c2c;"></i>
+                <strong>Juni 2026:</strong> Tayangan nyaris 1 juta, interaksi melonjak 487%, followers baru +75% — Reels mendominasi 74% sebagai mesin pertumbuhan utama. 🚀
+            </p>
         </div>
-        <div class="kpi-grid">
-            <div class="glass-card"><div class="kpi-number">443,6rb <span style="font-size:1.2rem;">→ 546,9rb</span></div><div class="kpi-label">Tayangan <span class="trend-up"><i class="fas fa-arrow-up"></i> +23,3%</span></div></div>
-            <div class="glass-card"><div class="kpi-number">183rb <span style="font-size:1.2rem;">→ 220,2rb</span></div><div class="kpi-label">Reach <span class="trend-up"><i class="fas fa-arrow-up"></i> +7,2%</span></div></div>
-            <div class="glass-card"><div class="kpi-number">+1.038 <span style="font-size:1.2rem;">→ +1.600</span></div><div class="kpi-label">Followers Baru <span class="trend-up"><i class="fas fa-chart-simple"></i> +54%</span></div></div>
-            <div class="glass-card"><div class="kpi-number">76,9% → 71,8%</div><div class="kpi-label">Non-Followers<span class="trend-up"> (masih dominan)</span></div></div>
+
+        <!-- ===== GRAFIK UTAMA ===== -->
+        <div class="grid-2col">
+            <div class="chart-premium" data-aos="fade-right">
+                <h3><i class="fas fa-chart-simple"></i> Tayangan vs Reach (Mei → Juni)</h3>
+                <canvas id="compareMainChart" width="400" height="200"></canvas>
+                <div class="badge-premium" style="margin-top:12px;">
+                    📊 Impressions +78% meski Reach turun → frekuensi tayang per orang naik drastis.
+                </div>
+            </div>
+            <div class="chart-premium" data-aos="fade-left">
+                <h3><i class="fas fa-chart-pie"></i> Konten Breakdown (Juni 2026)</h3>
+                <canvas id="juneContentDonut" width="400" height="200"></canvas>
+                <div class="badge-premium" style="margin-top:12px;">
+                    📌 Reels 74% jadi mesin utama, Story 23,5% pendukung engagement harian.
+                </div>
+            </div>
         </div>
-        <p style="margin-top: 0.5rem; opacity:0.9;"><i class="fas fa-chart-line" style="color:#e07c2c;"></i> Mei 2026: tayangan +23%, followers baru melonjak 54% — bukti strategi konten mulai membuahkan hasil. 🚀</p>
+
+        <!-- ===== INSIGHT KELEBIHAN & KURANG ===== -->
+        <div class="grid-2col" id="insight">
+            <div class="insight-card" data-aos="fade-up">
+                <h3><i class="fas fa-crown" style="color:#f2b05e;"></i> ✅ Keunggulan Growth (Juni)</h3>
+                <ul class="list-styled">
+                    <li><i class="fas fa-chart-line"></i> <strong>Impressions +78,3%</strong> → hampir 1 juta tayangan, bukti algoritma menyukai konten.</li>
+                    <li><i class="fas fa-bolt"></i> <strong>Interaksi +487%</strong> (7,8rb → 45,8rb) — engagement meledak! 🔥</li>
+                    <li><i class="fas fa-users"></i> <strong>+2.800 followers</strong> (+75%) — konversi audiens baru terus meningkat.</li>
+                    <li><i class="fas fa-globe"></i> <strong>Non-followers 86,8%</strong> — jangkauan organik sangat luas ke audiens baru.</li>
+                    <li><i class="fas fa-video"></i> <strong>Reels 74%</strong> — strategi video pendek terbukti paling efektif.</li>
+                    <li><i class="fas fa-link"></i> Klik Link +72,5% & Alamat Bisnis +44,5% → minat offline meningkat.</li>
+                </ul>
+            </div>
+            <div class="insight-card" data-aos="fade-up">
+                <h3><i class="fas fa-exclamation-triangle" style="color:#f2a65a;"></i> ⚠️ Area Perbaikan</h3>
+                <ul class="list-styled">
+                    <li><i class="fas fa-funnel-dollar"></i> <strong>Reach turun 59,9%</strong> (220k → 88k) — perlu variasi konten & hook lebih kuat.</li>
+                    <li><i class="fas fa-image"></i> <strong>Feed hanya 2,5%</strong> — carousel & konten statis perlu dioptimasi minimal 10%.</li>
+                    <li><i class="fas fa-user-plus"></i> <strong>Kunjungan Profil -17,7%</strong> — CTA follow & branding perlu diperkuat.</li>
+                    <li><i class="fas fa-chart-bar"></i> <strong>Hanya 1 konten viral</strong> (48k views) — target: 5+ konten 20k+ per bulan.</li>
+                    <li><i class="fas fa-clock"></i> Konsistensi 648 konten/bulan — jaga kualitas agar tidak terjadi fatigue.</li>
+                </ul>
+                <div class="badge-premium" style="margin-top:10px;">
+                    <i class="fas fa-lightbulb"></i> Fokus: <strong>Reels dengan CTA follow + Feed Carousel + Optimasi Hook</strong>
+                </div>
+            </div>
+        </div>
+
+        <!-- ===== GRAFIK INTERAKSI & KONVERSI ===== -->
+        <div class="grid-2col">
+            <div class="chart-premium">
+                <h3><i class="fas fa-heart"></i> Interaksi &amp; Konten (Mei → Juni)</h3>
+                <canvas id="engagementProdChart" width="400" height="200"></canvas>
+                <p class="badge-premium" style="margin-top:10px;">
+                    📈 Interaksi naik 487% meski konten hanya +1,1% — kualitas konten jauh lebih baik!
+                </p>
+            </div>
+            <div class="chart-premium">
+                <h3><i class="fas fa-percent"></i> Konversi Followers (Reach → Follow)</h3>
+                <canvas id="conversionRateChart" width="400" height="200"></canvas>
+                <p class="badge-premium" style="margin-top:8px;">
+                    🎯 Conversion rate melonjak dari 0,73% ke 3,18% — CTA & konten lebih efektif!
+                </p>
+            </div>
+        </div>
+
+        <!-- ===== DATA TAMBAHAN: KOTA & AKTIVITAS PROFIL ===== -->
+        <div class="grid-2col">
+            <div class="insight-card">
+                <h3><i class="fas fa-map-pin"></i> 🏙️ Kota Audiens Teratas</h3>
+                <ul class="list-styled">
+                    <li><i class="fas fa-city"></i> <strong>Jakarta</strong> — 6,2%</li>
+                    <li><i class="fas fa-city"></i> <strong>Semarang</strong> — 4,2%</li>
+                    <li><i class="fas fa-city"></i> <strong>Surabaya</strong> — 3,9%</li>
+                    <li><i class="fas fa-city"></i> <strong>Yogyakarta</strong> — 3,0%</li>
+                </ul>
+                <div class="badge-premium" style="margin-top:8px;">
+                    🌏 Jangkauan nasional — peluang besar untuk wisatawan & pecinta kuliner Nusantara.
+                </div>
+            </div>
+            <div class="insight-card">
+                <h3><i class="fas fa-arrow-trend-up"></i> 📊 Aktivitas Profil</h3>
+                <ul class="list-styled">
+                    <li><i class="fas fa-user"></i> <strong>Kunjungan Profil:</strong> 20.667 <span class="trend-down"><i class="fas fa-arrow-down"></i> -17,7%</span></li>
+                    <li><i class="fas fa-link"></i> <strong>Klik Link:</strong> 2.060 <span class="trend-up"><i class="fas fa-arrow-up"></i> +72,5%</span></li>
+                    <li><i class="fas fa-location-dot"></i> <strong>Klik Alamat Bisnis:</strong> 490 <span class="trend-up"><i class="fas fa-arrow-up"></i> +44,5%</span></li>
+                </ul>
+                <div class="badge-premium" style="margin-top:8px;">
+                    📌 Link & alamat bisnis naik signifikan — minat kunjungan offline meningkat!
+                </div>
+            </div>
+        </div>
+
+        <!-- ===== STRATEGI 30 HARI ===== -->
+        <div id="strategi">
+            <div class="section-title"><i class="fas fa-rocket"></i> 🚀 Blueprint 30 Hari: Dari Viral ke Loyal Customer</div>
+        </div>
+        <div class="strategy-dark-premium" data-aos="zoom-in">
+            <div class="pill-glow"><i class="fas fa-bullseye"></i> TARGET JULI 2026</div>
+            <div class="flex-stats">
+                <div><i class="fas fa-eye"></i> Tayangan <strong>1,2 Juta+</strong></div>
+                <div><i class="fas fa-user-plus"></i> Followers <strong>+3.500 – 4.000</strong></div>
+                <div><i class="fas fa-heart"></i> Interaksi <strong>55–60rb</strong></div>
+                <div><i class="fas fa-fire"></i> Viral <strong>5+ konten 20k views</strong></div>
+            </div>
+            <div class="week-flex" style="margin-top:1.2rem;">
+                <div class="day-badge"><strong>Senin</strong><br>BTS dapur + menu</div>
+                <div class="day-badge"><strong>Selasa</strong><br>Menu favorit pengunjung</div>
+                <div class="day-badge"><strong>Rabu</strong><br>Testimoni pelanggan</div>
+                <div class="day-badge"><strong>Kamis</strong><br>Aktivitas & keseruan</div>
+                <div class="day-badge"><strong>Jumat</strong><br>Promo / rekomendasi</div>
+                <div class="day-badge"><strong>Sabtu</strong><br>Momen keluarga + ramai</div>
+                <div class="day-badge"><strong>Minggu</strong><br>Wisata kuliner + nostalgia</div>
+            </div>
+        </div>
+
+        <!-- ===== REKOMENDASI SPESIFIK ===== -->
+        <div class="grid-2col">
+            <div class="insight-card">
+                <h3><i class="fas fa-magic"></i> 🎯 Taktik Konversi (Non-Follower → Followers)</h3>
+                <ul class="list-styled">
+                    <li>📣 <strong>CTA di setiap Reels:</strong> "Follow biar ga ketinggalan menu spesial Pawon Mbah Gito"</li>
+                    <li>🎁 <strong>Mini Giveaway:</strong> Makanan gratis untuk follow & tag 3 teman.</li>
+                    <li>💾 <strong>Saveable konten:</strong> "5 Menu Wajib Coba di Jogja" + "Rahasia Sambal Pedas Ndeso"</li>
+                    <li>📌 Optimasi Bio: <i class="fas fa-map-pin"></i> "Kuliner Ndeso Jogja | Follow & Save untuk promo & resep"</li>
+                </ul>
+            </div>
+            <div class="insight-card">
+                <h3><i class="fas fa-chart-line"></i> 🔁 Perbaikan Interaksi & Hook</h3>
+                <ul class="list-styled">
+                    <li>🔥 <strong>Hook 3 detik ekstrem:</strong> "Rasa ini cuma ada di Pawon Mbah Gito..."</li>
+                    <li>🗣️ Ajukan pertanyaan di caption: "Menu favorit kalian apa? Vote di kolom komentar!"</li>
+                    <li>📊 Story interaktif: Voting menu, tebak harga, polling rasa.</li>
+                    <li>🎥 Balas komentar dengan video singkat → tingkatkan engagement rate.</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- ===== JADWAL POSTING PREMIUM ===== -->
+        <div class="section-title"><i class="fas fa-clock"></i> ⏰ Prime Time Posting (Berdasarkan Insight)</div>
+        <div class="table-wrap">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Hari</th>
+                        <th>Waktu Emas (WIB)</th>
+                        <th>Jenis Konten</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td>Senin - Rabu</td><td>18.30 - 20.30</td><td>Reels edukasi menu + Story aktivitas</td></tr>
+                    <tr><td>Kamis - Jumat</td><td>19.00 - 21.00</td><td>Reels testimoni & FOMO rame</td></tr>
+                    <tr><td>Sabtu</td><td>17.00 - 19.00</td><td>Live cooking + promo kilat</td></tr>
+                    <tr><td>Minggu</td><td>18.00 - 20.00</td><td>Reels nostalgia / keluarga, carousel menu favorit</td></tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- ===== FINAL SCORECARD ===== -->
+        <div class="strategy-dark-premium" style="background: linear-gradient(125deg, #1e1915, #130f0c); margin-top: 2rem;">
+            <div class="pill-glow"><i class="fas fa-chart-line"></i> FINAL SCORECARD</div>
+            <div style="display: flex; gap: 2rem; flex-wrap: wrap; justify-content: space-between;">
+                <div><span class="badge-premium">Mei Rating</span> <strong>8.5/10</strong><br>Growth solid</div>
+                <div><span class="badge-premium">Juni Rating</span> <strong>9.2/10</strong><br>Interaksi meledak!</div>
+                <div><span class="badge-premium">Potensi Juli</span> <strong>9.5+</strong><br>Optimasi CTA & Feed</div>
+            </div>
+            <p style="margin-top:1rem;">
+                <i class="fas fa-quote-left"></i> Pawon Mbah Gito berhasil mentransformasi strategi konten dengan dominasi Reels, menghasilkan lonjakan interaksi 487% dan hampir 1 juta tayangan. Tantangan berikutnya: mengembalikan reach, mengoptimasi Feed, dan mengubah 86,8% audiens baru menjadi komunitas loyal.
+            </p>
+        </div>
+
+        <!-- ===== FOOTER ===== -->
+        <div class="footer">
+            <i class="fas fa-utensils"></i> Pawon Mbah Gito · Data Insight: Mei vs Juni 2026<br>
+            📊 Tayangan +78% | Interaksi +487% | Followers +75% | Reels 74% sebagai mesin utama.
+        </div>
+
     </div>
 
-    <!-- GRAFIK PERBANDINGAN & PIE CHART MEI (interaktif) -->
-    <div class="grid-2col">
-        <div class="chart-premium" data-aos="fade-right">
-            <h3 style="color:#f3c691;"><i class="fas fa-chart-simple"></i> Tayangan vs Reach (April → Mei)</h3>
-            <canvas id="compareMainChart" width="400" height="220"></canvas>
-            <div class="badge-premium" style="margin-top: 12px;">📊 Lonjakan impressions signifikan (+103k tayangan)</div>
-        </div>
-        <div class="chart-premium" data-aos="fade-left">
-            <h3 style="color:#f3c691;"><i class="fas fa-chart-pie"></i> Konten Breakdown (Mei 2026)</h3>
-            <canvas id="meiContentDonut" width="400" height="200"></canvas>
-            <div class="badge-premium">📌 Story 46,9% masih jadi penggerak engagement harian, Reels 31% mesin reach baru.</div>
-        </div>
-    </div>
+    <!-- ===== SCRIPTS ===== -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js">
+    </script>
+    <script>
+        AOS.init({ duration: 600, once: true });
 
-    <!-- INSIGHT DETAIL (KELEBIHAN & KURANG) -->
-    <div class="grid-2col" id="insight">
-        <div class="insight-card" data-aos="fade-up">
-            <h3><i class="fas fa-crown" style="color:#f2b05e;"></i> ✅ Keunggulan Growth (Mei)</h3>
-            <ul class="list-styled">
-                <li><i class="fas fa-chart-line progress-icon"></i> <strong>Non-followers 71,8%</strong> → algoritma mendistribusikan konten secara luas.</li>
-                <li><i class="fas fa-users"></i> <strong>+1.600 follower</strong> meningkat 54% vs April (konversi lebih baik).</li>
-                <li><i class="fas fa-clock"></i> <strong>Story engagement super aktif</strong> menjaga loyalitas audiens.</li>
-                <li><i class="fas fa-fire"></i> <strong>Total konten 641</strong> (+99%) menunjukkan konsistensi tinggi.</li>
-                <li><i class="fas fa-chart-line"></i> Reach organik tumbuh 7,2% tanpa iklan berbayar.</li>
-            </ul>
-        </div>
-        <div class="insight-card" data-aos="fade-up">
-            <h3><i class="fas fa-chart-line"></i> ⚠️ Area Ekskalasi (Butuh Perhatian)</h3>
-            <ul class="list-styled">
-                <li><i class="fas fa-comment-dots"></i> <strong>Interaksi turun 15%</strong> (9.201 → 7.800) → butuh konten dengan hook kuat & CTA.</li>
-                <li><i class="fas fa-video"></i> <strong>Reels belum optimal</strong> hanya 31% kontribusi; idealnya 45% untuk percepatan follower.</li>
-                <li><i class="fas fa-percent"></i> <strong>Conversion Rate 0,73%</strong> → dari 220rb reach jadi 1600 follow, masih bisa double dengan CTA lebih agresif.</li>
-                <li><i class="fas fa-dumbbell"></i> Risiko fatigue konten: 641 posting/bulan, perlu menjaga kualitas.</li>
-            </ul>
-            <div class="badge-premium" style="margin-top: 10px;"><i class="fas fa-lightbulb"></i> Fokus: <strong>Reels dengan CTA Follow/Save + Live interaktif</strong></div>
-        </div>
-    </div>
+        // ---- CHART 1: Tayangan vs Reach (bar) ----
+        const ctxMain = document.getElementById('compareMainChart').getContext('2d');
+        new Chart(ctxMain, {
+            type: 'bar',
+            data: {
+                labels: ['Tayangan (Impressions)', 'Reach (Akun Dijangkau)'],
+                datasets: [{
+                    label: 'Mei 2026',
+                    data: [546882, 220173],
+                    backgroundColor: '#b56730',
+                    borderRadius: 10
+                }, {
+                    label: 'Juni 2026',
+                    data: [975171, 88177],
+                    backgroundColor: '#e07c2c',
+                    borderRadius: 10
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: true,
+                plugins: {
+                    tooltip: {
+                        callbacks: {
+                            label: (ctx) => `${ctx.dataset.label}: ${(ctx.raw / 1000).toFixed(0)} rb`
+                        }
+                    }
+                },
+                scales: {
+                    y: {
+                        ticks: { callback: (val) => (val / 1000) + 'k' },
+                        grid: { color: '#3a2e26' }
+                    }
+                }
+            }
+        });
 
-    <!-- Grafik engagement & konversi -->
-    <div class="grid-2col">
-        <div class="chart-premium">
-            <h3><i class="fas fa-chart-line"></i> Engagement & Produktivitas</h3>
-            <canvas id="engagementProdChart" width="400" height="200"></canvas>
-            <p class="badge-premium" style="margin-top: 10px;">📈 Konten naik drastis (+99%) namun interaksi sedikit turun → pentingnya kualitas hook & saveable content.</p>
-        </div>
-        <div class="chart-premium">
-            <h3><i class="fas fa-chart-line"></i> Konversi Followers (Reach ke Follow)</h3>
-            <canvas id="conversionRateChart" width="400" height="200"></canvas>
-            <p class="badge-premium" style="margin-top: 8px;">🎯 Target Juni: capai conversion 1% → +2.200 follower baru!</p>
-        </div>
-    </div>
+        // ---- CHART 2: Donut konten Juni ----
+        const ctxDonut = document.getElementById('juneContentDonut').getContext('2d');
+        new Chart(ctxDonut, {
+            type: 'doughnut',
+            data: {
+                labels: ['Reels (74%)', 'Story (23,5%)', 'Feed (2,5%)'],
+                datasets: [{
+                    data: [74, 23.5, 2.5],
+                    backgroundColor: ['#e07c2c', '#cf8e5a', '#b56938'],
+                    borderWidth: 0
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'bottom',
+                        labels: { color: '#e2cfb5', font: { size: 11 } }
+                    }
+                }
+            }
+        });
 
-    <!-- STRATEGI JITU 30 HARI ke depan (Premium) -->
-    <div id="strategi">
-        <div class="section-title"><i class="fas fa-rocket"></i> 🚀 Blueprint 30 Hari: Dari Viral ke Loyal Customer</div>
-    </div>
-    <div class="strategy-dark-premium" data-aos="zoom-in">
-        <div class="pill-glow"><i class="fas fa-bullseye"></i> TARGET JUNI 2026</div>
-        <div style="display: flex; flex-wrap: wrap; gap: 1.5rem; justify-content: space-between;">
-            <div><i class="fas fa-user-plus"></i> +2.000 - 2.500 Followers</div>
-            <div><i class="fas fa-chart-line"></i> ER >4,5%</div>
-            <div><i class="fas fa-store"></i> Kunjungan offline +20%</div>
-        </div>
-        <div class="week-flex" style="margin-top: 1rem;">
-            <div class="day-badge"><strong>Senin</strong><br>Reels menu viral + story dapur</div>
-            <div class="day-badge"><strong>Selasa</strong><br>Carousel harga & rekomendasi</div>
-            <div class="day-badge"><strong>Rabu</strong><br>Hook lucu "diet gagal"</div>
-            <div class="day-badge"><strong>Kamis</strong><br>Testimoni pelanggan</div>
-            <div class="day-badge"><strong>Jumat</strong><br>FOMO antrian + promo</div>
-            <div class="day-badge"><strong>Sabtu</strong><br>LIVE masak & interaksi</div>
-            <div class="day-badge"><strong>Minggu</strong><br>Nostalgia vibes ndeso</div>
-        </div>
-    </div>
+        // ---- CHART 3: Interaksi & Konten ----
+        const ctxEng = document.getElementById('engagementProdChart').getContext('2d');
+        new Chart(ctxEng, {
+            type: 'bar',
+            data: {
+                labels: ['Mei', 'Juni'],
+                datasets: [{
+                    label: 'Interaksi (ribu)',
+                    data: [7.8, 45.8],
+                    backgroundColor: '#e07c2c',
+                    borderRadius: 8
+                }, {
+                    label: 'Total Konten (ratusan)',
+                    data: [6.41, 6.48],
+                    backgroundColor: '#cf8e5a',
+                    borderRadius: 8
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    tooltip: {
+                        callbacks: {
+                            label: (ctx) => `${ctx.dataset.label}: ${ctx.raw} ${ctx.datasetIndex === 0 ? 'interaksi (ribu)' : 'ratusan konten'}`
+                        }
+                    }
+                },
+                scales: {
+                    y: {
+                        grid: { color: '#3a2e26' }
+                    }
+                }
+            }
+        });
 
-    <!-- REKOMENDASI SPESIFIK -->
-    <div class="grid-2col">
-        <div class="insight-card">
-            <h3><i class="fas fa-magic"></i> 🎯 Taktik Konversi (Non-Follower → Followers)</h3>
-            <ul class="list-styled">
-                <li>📣 <strong>CTA di setiap Reels:</strong> "Follow biar ga ketinggalan menu langka Pawon Mbah Gito"</li>
-                <li>🎁 <strong>Mini Giveaway:</strong> Makanan gratis untuk yang follow & tag 3 teman.</li>
-                <li>💾 <strong>Saveable konten:</strong> "5 Menu Wajib Coba di Jogja" + "Rahasia Sambal Tradisional"</li>
-                <li>📌 Optimasi Bio: <i class="fas fa-map-pin"></i> "Kuliner Ndeso Jogja | Follow & Save untuk promo & resep"</li>
-            </ul>
-        </div>
-        <div class="insight-card">
-            <h3><i class="fas fa-chart-line"></i> 🔁 Perbaikan Interaksi & Hook</h3>
-            <ul class="list-styled">
-                <li>🔥 <strong>Hook 3 detik ekstrem:</strong> "Gak nyangka rasa seenak ini cuma di pinggir jalan..."</li>
-                <li>🗣️ Ajukan pertanyaan di caption: "Lebih enak mangut lele atau ayam goreng mentega?"</li>
-                <li>📊 Story interaktif: Voting menu favorit, tebak harga, polling rasa.</li>
-                <li>🎥 Balas komentar dengan video singkat → tingkatkan engagement rate.</li>
-            </ul>
-        </div>
-    </div>
+        // ---- CHART 4: Conversion Rate ----
+        const ctxConv = document.getElementById('conversionRateChart').getContext('2d');
+        new Chart(ctxConv, {
+            type: 'bar',
+            data: {
+                labels: ['Conversion Rate (%)'],
+                datasets: [{
+                    label: 'Mei 2026',
+                    data: [0.73],
+                    backgroundColor: '#b56730',
+                    borderRadius: 8
+                }, {
+                    label: 'Juni 2026',
+                    data: [3.18],
+                    backgroundColor: '#e07c2c',
+                    borderRadius: 8
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    tooltip: {
+                        callbacks: {
+                            label: (ctx) => `${ctx.dataset.label}: ${ctx.raw}%`
+                        }
+                    }
+                },
+                scales: {
+                    y: {
+                        ticks: { callback: (val) => val + '%' },
+                        grid: { color: '#3a2e26' }
+                    }
+                }
+            }
+        });
+    </script>
 
-    <!-- JADWAL POSTING PREMIUM & insight tambahan -->
-    <div class="section-title"><i class="fas fa-clock"></i> ⏰ Prime Time Posting (Berdasarkan Insight Aktif)</div>
-    <div style="overflow-x: auto;">
-        <table style="width:100%; background: rgba(20,17,15,0.7); border-radius: 1.5rem; border-collapse: collapse;">
-            <thead><tr style="border-bottom: 1px solid #e07c2c40;"><th style="padding:12px;">Hari</th><th>Waktu Emas (WIB)</th><th>Jenis Konten</th></tr></thead>
-            <tbody>
-                <tr><td style="padding:10px;">Senin - Rabu</td><td>18.30 - 20.30</td><td>Reels edukasi menu + Story aktivitas</td></tr>
-                <tr><td>Kamis - Jumat</td><td>19.00 - 21.00</td><td>Reels testimoni & FOMO rame</td></tr>
-                <tr><td>Sabtu</td><td>17.00 - 19.00</td><td>Live cooking + promo kilat</td></tr>
-                <tr><td>Minggu</td><td>18.00 - 20.00</td><td>Reels nostalgia / keluarga, carousel menu favorit</td></tr>
-            </tbody>
-        </table>
-    </div>
-
-    <!-- Kesimpulan akhir dengan skor -->
-    <div class="strategy-dark-premium" style="background: linear-gradient(125deg, #1e1915, #130f0c); margin-top: 2rem;">
-        <div class="pill-glow"><i class="fas fa-chart-line"></i> FINAL SCORECARD</div>
-        <div style="display: flex; gap: 2rem; flex-wrap: wrap; justify-content: space-between;">
-            <div><span class="badge-premium">April Rating</span> <strong>7.8/10</strong> <br> Good start</div>
-            <div><span class="badge-premium">Mei Rating</span> <strong>8.5/10</strong> <br> Strong growth</div>
-            <div><span class="badge-premium">Potensi Juni</span> <strong>9.0+</strong> <br> Optimasi CTA & Reels</div>
-        </div>
-        <p style="margin-top: 1rem;"><i class="fas fa-quote-left"></i> Pawon Mbah Gito berhasil memenangkan algoritma dengan reach & tayangan melesat. Sekarang saatnya mengubah audiens baru menjadi komunitas loyal. Perkuat CTA, bikin konten 'disimpan', dan maksimalkan Reels & Live.</p>
-    </div>
-
-    <div class="footer">
-        <i class="fas fa-utensils"></i> Pawon Mbah Gito · Data Insight: April vs Mei 2026<br>
-        📊 Tayangan +23% | Followers +54% | Story masih menjadi tulang punggung engagement. Next: Reels dominance + live conversion.
-    </div>
-</div>
-
-<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-<script>
-    AOS.init({ duration: 600, once: true });
-    // chart perbandingan tayangan & reach
-    const ctxMain = document.getElementById('compareMainChart').getContext('2d');
-    new Chart(ctxMain, {
-        type: 'bar',
-        data: {
-            labels: ['Tayangan (Impressions)', 'Reach (Akun Dijangkau)'],
-            datasets: [
-                { label: 'April 2026', data: [443633, 183047], backgroundColor: '#b56730', borderRadius: 12 },
-                { label: 'Mei 2026', data: [546882, 220173], backgroundColor: '#e07c2c', borderRadius: 12 }
-            ]
-        },
-        options: {
-            responsive: true,
-            maintainAspectRatio: true,
-            plugins: { tooltip: { callbacks: { label: (ctx) => `${ctx.dataset.label}: ${(ctx.raw / 1000).toFixed(0)} rb` } } },
-            scales: { y: { ticks: { callback: (val) => (val / 1000) + 'k' }, grid: { color: '#3a2e26' } } }
-        }
-    });
-
-    // pie chart Mei konten (Story 46.9, Reels 31, Feed/Lain 22.1)
-    const ctxMeiDonut = document.getElementById('meiContentDonut').getContext('2d');
-    new Chart(ctxMeiDonut, {
-        type: 'doughnut',
-        data: { labels: ['Story (46.9%)', 'Reels (31%)', 'Feed & Lain (22.1%)'], datasets: [{ data: [46.9, 31, 22.1], backgroundColor: ['#cf8e5a', '#e6934b', '#b56938'], borderWidth: 0 }] },
-        options: { responsive: true, plugins: { legend: { position: 'bottom', labels: { color: '#e2cfb5' } } } }
-    });
-
-    // engagement & produktivitas chart (Interaksi dalam ribu, total konten /100)
-    const ctxEngProd = document.getElementById('engagementProdChart').getContext('2d');
-    new Chart(ctxEngProd, {
-        type: 'line',
-        data: {
-            labels: ['April', 'Mei'],
-            datasets: [
-                { label: 'Interaksi (ribu)', data: [9.2, 7.8], borderColor: '#eaa76a', backgroundColor: 'transparent', tension: 0.2, fill: false, pointBackgroundColor: '#f5b46a' },
-                { label: 'Total Konten (ratusan)', data: [3.21, 6.41], borderColor: '#cfa668', backgroundColor: 'transparent', tension: 0.2, fill: false, pointBackgroundColor: '#e0a05e' }
-            ]
-        },
-        options: { responsive: true, plugins: { tooltip: { callbacks: { label: (ctx) => `${ctx.dataset.label}: ${ctx.raw} ${ctx.datasetIndex === 0 ? 'interaksi (ribu)' : 'ratusan konten'}` } } } }
-    });
-
-    // conversion chart: followers baru vs reach conversion rate sederhana
-    const ctxConv = document.getElementById('conversionRateChart').getContext('2d');
-    new Chart(ctxConv, {
-        type: 'bar',
-        data: {
-            labels: ['Followers Baru', 'Conversion Rate (%)'],
-            datasets: [
-                { label: 'April', data: [1038, 0.57], backgroundColor: '#b87b4a' },
-                { label: 'Mei', data: [1600, 0.73], backgroundColor: '#e07c2c' }
-            ]
-        },
-        options: {
-            responsive: true,
-            plugins: { tooltip: { callbacks: { label: (ctx) => `${ctx.dataset.label}: ${ctx.raw}${ctx.dataIndex === 1 ? '%' : ' follower'}` } } },
-            scales: { y: { title: { display: true, text: 'Nilai', color: '#d1bc9c' } } }
-        }
-    });
-</script>
 </body>
 </html>
